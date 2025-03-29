@@ -1,4 +1,5 @@
-from ..LLM_API.BaseAPI import BaseAPI
+# from ..LLM_API.BaseAPI import BaseAPI
+from ..LLM_API.OpenAI import OpenAI_API
 
 class BaseAgent:
     """智能体基类"""
@@ -9,17 +10,12 @@ class BaseAgent:
             session_data (dict): 补全后的会话数据
             
         返回:
-            dict: 格式化后的响应数据，包含:
-                - id: 会话ID
-                - title: 会话标题
-                - start_time: 开始时间
-                - finish_reason: 结束原因
-                - messages: 消息列表
-                - usage: API使用情况
+            response_data (dict): 加入智能体信息的会话数据
         """
         try:
             # 调用大模型API
-            response_data = BaseAPI.request(session_data)
+            # response_data = BaseAPI.request(session_data)
+            response_data = OpenAI_API.request(session_data)
             
             return response_data
             

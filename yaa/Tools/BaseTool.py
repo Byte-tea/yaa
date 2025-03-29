@@ -32,3 +32,6 @@
 # - 被 BaseAgent 调用来执行具体工具
 # - 受 Auth 模块的资源限制约束
 # - 执行结果返回给 Prompt 模块生成后续提示
+
+class BaseTool:
+    pass

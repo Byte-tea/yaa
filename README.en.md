@@ -10,6 +10,27 @@
 
 `yaa` means Yet Another Agent, which can analyze and understand natural language instructions and automatically create, plan, execute, and check tasks.
 
----
+## Quick Start
 
-[yaa documentation](docs/README.md)
+Deploy locally:
+
+```bash
+git clone https://github.com/Byte-tea/yaa.git
+cd yaa
+```
+
+Run `yaa` service:
+
+```bash
+python -m yaa/yaa --serve
+```
+
+Command line interactive mode:
+
+```bash
+python -m yaa/yaa
+```
+
+## Project Implementation
+
+See [yaa documentation](docs/README.md) for details.

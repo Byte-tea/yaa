@@ -10,6 +10,27 @@
 
 `yaa` 的意思是 Yet Another Agent。是一个能分析理解自然语言指示，自动创建、规划、执行、验证任务的智能体。
 
----
+## 快速上手
 
-[yaa 文档](docs/README.md)
+部署到本地：
+
+```bash
+git clone https://github.com/Byte-tea/yaa.git
+cd yaa
+```
+
+运行 `yaa` 服务：
+
+```bash
+python -m yaa/yaa --serve
+```
+
+命令行交互模式：
+
+```bash
+python -m yaa/yaa
+```
+
+## 项目实现
+
+详见 [yaa 文档](docs/README.md)。

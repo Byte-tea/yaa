@@ -6,10 +6,12 @@
 3. 处理全局异常和中断
 """
 
+import sys
 import argparse
-from yaa.Config.ServerConfig import ServerConfig
-from yaa.Modules.Server import Server
+from .Config.ServerConfig import ServerConfig
+from .Server.BaseServer import BaseServer
 
+sys.path.append('..')
 def main():
     parser = argparse.ArgumentParser(description='yaa 智能体命令行工具')
 
@@ -35,13 +37,15 @@ def main():
                 'yaa_server': {'port': args.port},
                 'security': {}
             }
+            # 如果指定了配置文件，则加载配置文件
             if args.config:
-                print(f"使用配置文件: {args.config}")
+                # print(f"使用配置文件: {args.config}")
                 # TODO: 从配置文件加载配置
+                pass
             
             # 合并默认配置和运行时配置
             config = ServerConfig.merge_config(runtime_config)
-            server = Server(config=config)
+            server = BaseServer(config=config)
             print(f"启动服务, 端口号: {config['yaa_server']['port']}")
             server.listen()
         except KeyboardInterrupt:

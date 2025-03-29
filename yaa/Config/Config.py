@@ -20,14 +20,14 @@ class Config:
             'api_key': '',
             'model_name': 'gpt-4',
             'model_type': {
-                'is_function_call': True,
-                'is_reasoning': True
+                'is_function_call': False,
+                'is_reasoning': False
             },
             'cost_per_ktoken': 0.03,
             'cost_unit': 'USD',
             'max_tokens': 2000,
             'model_settings': {
-                'use_custom_temp': True,
+                'use_custom_temp': False,
                 'temperature': 0.7
             }
         },
@@ -64,17 +64,22 @@ class Config:
             user_config (dict): 用户提供的配置字典
             
         返回:
-            dict: 合并后的配置字典，用户配置优先于默认配置
+            dict: 合并后的配置字典，保留所有原始字段并合并特定配置项
         """
         if user_config is None:
             user_config = {}
             
-        merged_config = {
-            'yaa': {**cls.YAA_CONFIG, **user_config.get('yaa', {})},
-            'llm_api': {**cls.LLM_API_CONFIG, **user_config.get('llm_api', {})},
-            'prompt': {**cls.PROMPT_CONFIG, **user_config.get('prompt', {})},
-            'tool': {**cls.TOOL_CONFIG, **user_config.get('tool', {})},
-            # TODO 'security': {**cls.SECURITY_CONFIG, **user_config.get('security', {})}
-        }
+        # 保留所有原始字段
+        merged_config = user_config.copy()
         
+        # 合并特定配置项
+        if 'yaa' in user_config:
+            merged_config['yaa'] = {**cls.YAA_CONFIG, **user_config['yaa']}
+        if 'llm_api' in user_config:
+            merged_config['llm_api'] = {**cls.LLM_API_CONFIG, **user_config['llm_api']}
+        if 'prompt' in user_config:
+            merged_config['prompt'] = {**cls.PROMPT_CONFIG, **user_config['prompt']}
+        if 'tool' in user_config:
+            merged_config['tool'] = {**cls.TOOL_CONFIG, **user_config['tool']}
+            
         return merged_config

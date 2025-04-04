@@ -1,4 +1,4 @@
-class BaseAPI:
+class API:
     def request(session_data):
         # 添加系统回复消息
         session_data['messages'].append({

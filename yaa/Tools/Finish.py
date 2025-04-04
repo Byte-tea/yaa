@@ -1,6 +1,7 @@
-from yaa.Tools.BaseTool import Tool
+from yaa.Tools.BaseTool import Tool as OldTool
+from yaa.Stream.StreamTools import StreamTools as st
 
-class Tool(Tool):
+class Tool(OldTool):
     '''完成会话
     大模型使用时：
         大模型的回答包含：<完成会话>\n<理由>（对任务完成的总结）</理由>\n</完成会话>
@@ -37,13 +38,32 @@ class Tool(Tool):
     }
 
     @classmethod
-    def use(cls, session_data):
+    def use(cls, session_data, stream_func=None):
+        stream_tools = st(session_data)
+        name = cls.ToolInfo['name']
+        role = 'tool'
+
+        # 验证权限
         if session_data['config']['tool'][cls.ToolInfo['id']]['auto_approve'] == True:
-            session_data['messages'].append({
-                "role": "tool",
-                "content": f"[完成会话]执行成功。"
-            })
-            session_data['status'] = '已完成'
+            tool_content = f'[{name}]执行成功。'
+            status = '已完成'
         else:
-            session_data['status'] = '已中断'
+            tool_content = None
+            status = '已中断'
+
+        # 推送流式数据
+        stream_tools.update_stream(
+            tool_content,
+            session_data,
+            role=role,
+            status=status,
+            stream_func=stream_func
+        )
+
+        if tool_content is not None:
+            session_data['messages'].append({
+                "role": role,
+                "content": tool_content
+            })
+        session_data['status'] = status
         return session_data

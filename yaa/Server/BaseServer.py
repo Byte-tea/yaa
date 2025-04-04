@@ -13,7 +13,7 @@ from yaa.Agent.BaseAgent import Agent
 from yaa.Auth.KeyAuth import Auth
 from yaa.Config.ServerConfig import ServerConfig
 
-class BaseServer:
+class Server:
     def __init__(self, config=None):
         """初始化服务器
         
@@ -33,7 +33,6 @@ class BaseServer:
         self.max_connections = server_config.get('max_connections', 1)
         
         self.security_config = config.get('security', {})
-        self.api_keys = [key['key'] for key in self.security_config.get('api_key', [])]
         
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
